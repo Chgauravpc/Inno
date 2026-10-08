@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrackFolio — by Team Innovisionaries
 
-## Getting Started
+See what your investments are *really* worth: every stock, REIT, InvIT and bond from every broker, after tax, costs and inflation.
 
-First, run the development server:
+- **Frontend:** Next.js (App Router), Tailwind, Recharts, Framer Motion
+- **Backend:** FastAPI (`api/index.py`, engines in `backend/`), deployed as a Vercel Python function
+- **Data:** demo investor from a sandbox Account Aggregator fetch (`backend/data.py`); tax rules in `backend/tax_rules.py`
 
+## Run locally
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+python -m venv .venv && .venv/Scripts/pip install fastapi uvicorn   # macOS/Linux: .venv/bin/pip
+.venv/Scripts/python -m uvicorn api.index:app --port 8000          # API + docs at /api/py/docs
+npm install && npm run dev                                         # http://localhost:3000 (proxies /api/py to :8000)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy
+`npx vercel login` then `npx vercel --prod`. No env vars needed. `/api/py/*` is rewritten to the Python function.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Live data and AI (optional, both degrade gracefully)
+- **Yahoo Finance** (on by default, no key): live prices for the 9 listed holdings, real cost basis from the close on each purchase date, and real Nifty 50 / REIT-InvIT basket / G-Sec ETF history for Benchmarks and the Twin tracker. Set `LIVE_DATA=0` for deterministic demo prices. Bonds stay on demo values.
+- **OpenRouter LLM** for the Ask tab: copy `.env.example` to `.env` and set `OPENROUTER_API_KEY` (and optionally `OPENROUTER_MODEL`). On Vercel add the same variables in Project Settings. Without a key, or if the call fails, Ask uses the built-in rule-based answers. The key is only read server-side.
+- `GET /api/py/status` shows what is enabled.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tests: `python -m pytest tests` (mocks Yahoo and OpenRouter).
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Education only, not investment advice.

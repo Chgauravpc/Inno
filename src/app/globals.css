@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #0b1f33;
+  --muted: #5a6b7c;
+  --line: #e1e7ee;
+  --brand: #0b7a66;
+  --brand-strong: #075e4e;
+  --brand-soft: #def3ed;
+  --amber: #b45309;
+  --amber-soft: #fdf0dc;
+  --neg: #c2410c;
+  --pos: #047857;
+  --indigo: #4f46e5;
+  --on-brand: #ffffff;
+  --hero: #07251f;
+  --hero-ink: #e8f6f2;
+  --shadow: 0 1px 2px rgb(11 31 51 / 0.05), 0 8px 24px -12px rgb(11 31 51 / 0.12);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #081018;
+    --surface: #101b27;
+    --surface-2: #162434;
+    --ink: #e8eef5;
+    --muted: #93a4b5;
+    --line: #223244;
+    --brand: #34d3a8;
+    --brand-strong: #6ee7c4;
+    --brand-soft: #0f3a31;
+    --amber: #f6b04c;
+    --amber-soft: #3a2a10;
+    --neg: #fb923c;
+    --pos: #4ade80;
+    --indigo: #8b87ff;
+    --on-brand: #04231c;
+    --hero: #0a2b25;
+    --hero-ink: #e8f6f2;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-neg: var(--neg);
+  --color-pos: var(--pos);
+  --color-indigo: var(--indigo);
+  --color-on-brand: var(--on-brand);
+  --color-hero: var(--hero);
+  --color-hero-ink: var(--hero-ink);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2), var(--line), var(--surface-2));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 10px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.recharts-text {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
